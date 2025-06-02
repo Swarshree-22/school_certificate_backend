@@ -18,13 +18,13 @@ app.post("/generate-pdf", async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      headless: "new",
+      headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     const page = await browser.newPage();
     await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
-    const pdfBuffer = await page.pdf({ format: "A4" });
+    const pdfBuffer = await page.pdf({ format: "A4", printBackground: true });
     await browser.close();
 
     res.contentType("application/pdf");
@@ -36,5 +36,5 @@ app.post("/generate-pdf", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(Server is running on port ${PORT});
 });
